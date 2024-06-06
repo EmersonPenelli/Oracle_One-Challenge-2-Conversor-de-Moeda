@@ -1,5 +1,11 @@
-public double calculos(double valorDigitado, String opcao1Selecionada, String opcao2Selecionada, String[] opcoes) {
+package subsystens;
+
+public class VelCalculos {
+
+    public double calculos(double valorDigitado, String opcao1Selecionada, String opcao2Selecionada, String[] opcoes) {
+
         // Base km/h
+
         // km/h para km/h
         if (opcao1Selecionada.equals(opcoes[0]) && opcao2Selecionada.equals(opcoes[0])) {
             return valorDigitado;
@@ -16,7 +22,9 @@ public double calculos(double valorDigitado, String opcao1Selecionada, String op
         if (opcao1Selecionada.equals(opcoes[0]) && opcao2Selecionada.equals(opcoes[3])) {
             return valorDigitado / 1216;
         }
+
         // Base mph
+
         // mph para km/h 
         if (opcao1Selecionada.equals(opcoes[1]) && opcao2Selecionada.equals(opcoes[0])) {
             return valorDigitado * 1.609;
@@ -27,7 +35,6 @@ public double calculos(double valorDigitado, String opcao1Selecionada, String op
         }
         // mph para mn/h
         if (opcao1Selecionada.equals(opcoes[1]) && opcao2Selecionada.equals(opcoes[2])) {
-            return ((valorDigitado - 32) / 1.8) + 273.15;
             return valorDigitado / 1.151;
         }
         // mph para Ma
@@ -36,6 +43,7 @@ public double calculos(double valorDigitado, String opcao1Selecionada, String op
         }
 
         // Base mn/h
+
         // mn para km/h
         if (opcao1Selecionada.equals(opcoes[2]) && opcao2Selecionada.equals(opcoes[0])) {
             return valorDigitado / 0.539957;
