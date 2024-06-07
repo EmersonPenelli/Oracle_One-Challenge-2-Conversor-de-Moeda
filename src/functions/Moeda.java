@@ -8,20 +8,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import Subsystens.MoedaCalculos;
+import subsystems.MoedaCalculos;
 import enums.MoedasEnum;
 import interfaces.Conversores;
 import res.Global;
+
 public class Moeda implements Conversores {
+
     @Override
     public void conversor() {
-
-        String suaMoeda = "";
-        System.out.println(suaMoeda);
-        String suaMoedaSigla = "";
-        String moedaConversao = "";
-        String moedaConversaoSigla = "";
-        String valorInserido = "";
 
         double valorDigitado;
         String opcao1Selecionada;
@@ -33,13 +28,8 @@ public class Moeda implements Conversores {
 
         DecimalFormat formato = new DecimalFormat("##.00");
 
-        // Construção da lista de oções do menu
         // Construção da lista de opções do menu
 
-        MoedasEnum[] moedas = MoedasEnum.values();
-        String[] moedasOpcoes = new String[moedas.length];
-        for (int i = 0; i < moedas.length; i++) {
-            moedasOpcoes[i] = moedas[i].getNome();
         MoedasEnum[] moedasLista = MoedasEnum.values();
         String[] opcoes = new String[moedasLista.length];
         for (int i = 0; i < moedasLista.length; i++) {
@@ -48,11 +38,6 @@ public class Moeda implements Conversores {
 
         // Construção do quadro de opções
 
-        final String[] BOTAO = { "Converter" };
-        final String[] BOTOES_CONFIRMACAO = { "Sim", "Não" };
-        final String AVISO_MENSAGEM = "Apenas números podem ser inseridos.\nPara inserir casas decimais utilize ponto (.)";
-
-        // 1º - Moeda base (sua moeda)
         JPanel quadro = new JPanel();
         JLabel txt1 = new JLabel("Converter ");
         JTextField valor = new JTextField(3);
@@ -60,42 +45,34 @@ public class Moeda implements Conversores {
         JComboBox<String> opcoesLista1 = new JComboBox<String>(opcoes);
         JComboBox<String> opcoesLista2 = new JComboBox<String>(opcoes);
 
-        suaMoeda += JOptionPane.showInputDialog(null, "Selecione a sua moeda", Global.TITULO, -1, null, moedasOpcoes, moedasOpcoes[0]);
         quadro.add(txt1);
         quadro.add(valor);
         quadro.add(opcoesLista1);
         quadro.add(txt2);
         quadro.add(opcoesLista2);
 
-        System.out.println(suaMoeda);
         // Início da função
 
-        if (suaMoeda.equals(null)) {
-            throw new RuntimeException("Função encerrada.");
-        }
         while (true) {
 
-        System.out.println("continua...");
             // Exibir quadro e coletar dados do usuário
 
             while (true) {
                 botaoPressionado = JOptionPane.showOptionDialog(null, quadro, Global.TITULO, JOptionPane.NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, BOTAO, null);
-
+                        JOptionPane.QUESTION_MESSAGE, null, Global.BOTAO, null);
 
                 if (botaoPressionado == 0) { // Botão "CONVERTER" pressionado
 
-    }
                     try {
                         valorDigitado = Double.valueOf(valor.getText());
                         opcao1Selecionada = (String) opcoesLista1.getSelectedItem();
                         opcao2Selecionada = (String) opcoesLista2.getSelectedItem();
                         break;
                     } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, AVISO_MENSAGEM, Global.TITULO, 0);
+                        JOptionPane.showMessageDialog(null, Global.AVISO_MENSAGEM, Global.TITULO, 0);
                         valor.setText("");
                     }
-
+    
                 } else { // Botão "FECHAR" pressionado
                     throw new RuntimeException("Função encerrada.");
                 }
@@ -103,7 +80,6 @@ public class Moeda implements Conversores {
 
             // Recuprar siglas
 
-            // Recupera a sigla da moeda
             for (MoedasEnum moedas : moedasLista) {
                 if (moedas.getNome().equals(opcao1Selecionada)) {
                     opcao1SelecionadaSigla = moedas.getSigla();
@@ -120,12 +96,14 @@ public class Moeda implements Conversores {
 
             // Exibir resultado
 
-            System.out.println(formato.format(resultado));
+            String resultadoFinal = opcao1SelecionadaSigla + " " + formato.format(valorDigitado) + " é igual a "
+                    + opcao2SelecionadaSigla + " " + formato.format(resultado) + ".";
+            JOptionPane.showMessageDialog(null, resultadoFinal, Global.TITULO, -1);
 
             // Continuar ou sair da função
 
             botaoPressionado = JOptionPane.showOptionDialog(null, "Deseja fazer outra conversão?", Global.TITULO, 0, 3,
-                    null, BOTOES_CONFIRMACAO, null);
+                    null, Global.BOTOES_CONFIRMACAO, null);
 
             if (botaoPressionado != 0) { // Sair
                 break;
